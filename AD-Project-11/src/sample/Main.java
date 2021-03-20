@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.shape.*;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -16,6 +17,8 @@ public class Main extends Application{
     private int x_max = 0;
     private int y_min = 0;
     private int y_max = 0;
+    private ArrayList<Integer> xs;
+    private ArrayList<Integer> ys;
 
     public static void main(String[] args) {
         launch();
@@ -30,6 +33,8 @@ public class Main extends Application{
             x.add(read.nextInt());
             y.add(read.nextInt());
         }
+        xs = x;
+        ys = y;
 
         ArrayList<Integer> min = new ArrayList<>();
         ArrayList<Integer> max = new ArrayList<>();
@@ -103,11 +108,17 @@ public class Main extends Application{
 
         Rectangle rectangle = new Rectangle(x_min,y_min,x_max-x_min,y_max-y_min);
         rectangle.setFill(Color.BROWN);
+        ArrayList<Circle> circles = new ArrayList<>();
+        for (int i = 0;i < xs.size();i++){
+            circles.add(new Circle(xs.get(i),ys.get(i),1));
+            circles.get(i).setFill(Color.BLACK);
+        }
         Group root = new Group(rectangle);
         Scene scene = new Scene(root, x_max * 2, y_max * 2, Color.rgb(240, 240, 240));
 
+        root.getChildren().addAll(circles);
         stage.initStyle(StageStyle.UTILITY);
-        stage.setTitle("Hello JavaFX!");
+        stage.setTitle("Graphic Rectangle!");
 
         stage.setScene(scene);
         stage.show();
